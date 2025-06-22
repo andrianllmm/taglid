@@ -1,77 +1,97 @@
 # TagLID
 
-**A word level Language Identification (LID) tool for Tagalog-English (Taglish) text.**
-
+**A word-level Language Identification (LID) tool for Tagalog-English (Taglish)
+text**
 
 ## About
 
-[taglid](src/taglid/) labels words in a Taglish (mix of Tagalog and English) text simply their language or detailed English and Tagalog frequency values and corresponding flag that indicates how it was identified. It is a rule-based and opinionated system of counting the frequency of languages in a code-switched text. It primarily depends on dictionary lookup to identify the language of a word. Additionally, it also considers cases such as exclusion for numerical numerals, named entities, universal interjections and inclusions such as unpacking abbreviations and contractions, slangs, stemming or lemmatizing inflected words, intrawords, and correction of misspellings.
-
+TagLID is a library that labels each word in a Taglish (Tagalog-English mix)
+text by language. It gives either a simple tag (`tgl` or `eng`) or detailed
+frequency info with flags indicating how the word was identified. It is a
+rule-based and opinionated system that mostly uses dictionary lookups. It also
+handles cases like skipping numbers, names, and interjections, and includes
+logic for dealing with slang, abbreviations, contractions, stemming or
+lemmatizing inflected words, intrawords, and correcting misspellings.
 
 ## Installation
 
-To install the latest development version from GitHub, use:
-
-```bash
-pip install git+https://github.com/andrianllmm/tagLID.git@main
+```sh
+pip install git+https://github.com/andrianllmm/taglid.git@main
 ```
 
 ## Usage
 
-taglid can act as a standalone library that can be imported via `import taglid` or as a CLI application via `python -m taglid`.
-
+TagLID can act as a standalone library that can be imported via `import taglid`
+or as a CLI application via `python -m taglid`.
 
 ### Library Mode
 
-
 #### Textual data
 
-To use taglid in textual data use the `lid` module.
+Use the `lid` module for textual data.
 
-To identify each word in a text use `lang_identify`. This takes any string and returns a list of words and their corresponding English and Tagalog values, flag, and correction.
+Use `lang_identify` to identify each word in a text. This takes any string and
+returns a list of words and their corresponding English and Tagalog values,
+flag, and correction.
+
 ```python
 from taglid.lid import lang_identify
 
 labeled_text = lang_identify("hello, mundo")
 print(labeled_text)
 ```
-```
+
 Output:
+
+```
 [{'Word': 'hello', 'eng': 1.0, 'tgl': 0.0, 'Flag': 'DICT', 'Correction': None}, {'Word': 'mundo', 'eng': 0.0, 'tgl': 1.0, 'Flag': 'DICT', 'Correction': None}]
 ```
 
-You can use [`tabulate`](https://pypi.org/project/tabulate/) to view output in tabular format.
+Use [`tabulate`](https://pypi.org/project/tabulate/) to view output in tabular
+format.
+
 ```python
 from tabulate import tabulate
 
 print(tabulate(labeled_text, headers="keys"))
 ```
-```
+
 Output:
+
+```
 word      eng    tgl  flag    correction
 ------  -----  -----  ------  ------------
 hello       1      0  DICT
 mundo       0      1  DICT
 ```
 
-You could also simplify this output to just showing the words and their language using `simplify`. This takes the return value of `lang_identify` and returns a list of tuples containing the word and its language.
+Use `simplify` to only show the words and their language. This takes the return
+value of `lang_identify` and returns a list of tuples containing the word and
+its language.
+
 ```python
 from taglid.lid import simplify
 
 simplified_text = simplify(labeled_text)
 print(simplified_text)
 ```
-```
+
 Output:
+
+```
 [('hello', 'eng'), ('mundo', 'tgl')]
 ```
 
-
 #### Datasets
 
-To use taglid in datasets use the `lid_dataset` module.
+Use the `lid_dataset` module for datasets.
 
-To label each word in each cell in a [`pandas`](https://pypi.org/project/pandas/) DataFrame use `lang_identify_df`. This takes a DataFrame of multiple rows and columns with each cell containing textual data and returns a labeled DataFrame where each token is a row labeled by its original row, original column, and token index.
+Use `lang_identify_df` to label each word in each cell in a
+[`pandas`](https://pypi.org/project/pandas/) DataFrame. This takes a DataFrame
+of multiple rows and columns with each cell containing textual data and returns
+a labeled DataFrame where each token is a row labeled by its original row,
+original column, and token index.
+
 ```python
 import pandas as pd
 from taglid.lid_dataset import lang_identify_df
@@ -83,8 +103,10 @@ df = pd.DataFrame(data)
 labeled_df = lang_identify_df(df)
 print(labeled_df)
 ```
-```
+
 Output:
+
+```
      col  token_index      word  eng  tgl  flag correction
 row
 0      0            1     hello  1.0  0.0  DICT       None
@@ -98,56 +120,63 @@ row
 
 ### CLI Mode
 
-Similarly, you can run `python -m taglid.lid` to directly input textual data and have taglid output the labeled text in tabular format.
-```bash
+Run TagLID from the terminal.
+
+```sh
 python -m taglid.lid
+```
 
+Then type a sentence when prompted.
+
+```
 text: hello, mundo
+```
 
+Output:
+
+```
 word      eng    tgl  flag    correction
 ------  -----  -----  ------  ------------
 hello       1      0  DICT
 mundo       0      1  DICT
 ```
-The output can also be simplified by adding `--simplify`.
-```bash
-python -m taglid.lid --simplify --text hello, mundo
 
+Add `--simplify` to only show the words and their language.
+
+```sh
+python -m taglid.lid --simplify --text hello, mundo
+```
+
+Output:
+
+```
 -----  ---
 hello  eng
 mundo  tgl
 -----  ---
 ```
 
-You can also use `lid_dataset` with Excel files by running `python -m taglid.lid_dataset in_path out_path` to directly label spreadsheets.
-```bash
-python -m taglid.lid_dataset sample.xlsx sample_labeled.xlsx
+Use `lid_dataset` with Excel files to directly label spreadsheets.
+
+```sh
+python -m taglid.lid_dataset in_path out_path
 ```
 
 ## Accuracy
 
-The accuracy of taglid is yet to be tested.
-
-
-## Issues
-
-If you encounter any issues or bugs, please report them on the [GitHub issues page](https://github.com/andrianllmm/taglid/issues).
-
+The accuracy hasn't been tested yet.
 
 ## Contributing
 
-This project welcomes contributions and suggestions. Please follow these steps:
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -am 'Add new feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Create a new Pull Request.
+Contributions are welcome! To get started:
 
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a pull request
 
-## License
+## Issues
 
-This project is licensed under the [GPL-3.0 License](LICENSE).
-
----
-
-For more information contact [maagmaandrian@gmail.com](mailto:maagmaandrian@gmail.com) with any additional questions or comments.
+Found a bug or issue? Report it on the
+[issues page](https://github.com/andrianllmm/taglid/issues).
