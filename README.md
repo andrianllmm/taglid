@@ -1,7 +1,13 @@
+<div align="center">
+
 # TagLID
 
 **A word-level Language Identification (LID) tool for Tagalog-English (Taglish)
 text**
+
+[![Demo](https://asciinema.org/a/674332.svg)](https://asciinema.org/a/674332)
+
+</div>
 
 ## About
 
