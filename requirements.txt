@@ -14,7 +14,7 @@ joblib==1.5.1
     # via nltk
 lemminflect==0.2.3
     # via taglid (pyproject.toml)
-nltk==3.8.1
+nltk==3.9
     # via
     #   taglid (pyproject.toml)
     #   tglstemmer
