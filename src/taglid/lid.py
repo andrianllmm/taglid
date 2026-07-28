@@ -337,10 +337,7 @@ def identify_abbr(token: str) -> dict | None:
         tgl_val = 0.0
 
         for word in ABBR[token].split():
-            if lang_vals := identify_dict(word):
-                eng_val += lang_vals["eng"]
-                tgl_val += lang_vals["tgl"]
-            elif lang_vals := identify_cont(word):
+            if (lang_vals := identify_dict(word)) or (lang_vals := identify_cont(word)):
                 eng_val += lang_vals["eng"]
                 tgl_val += lang_vals["tgl"]
 

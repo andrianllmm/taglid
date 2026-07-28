@@ -41,7 +41,7 @@ def load_slng(lang):
     with open(
         os.path.join(script_dir, f"../resources/slang/{lang}_slang.txt")
     ) as in_file:
-        return [slang.strip() for slang in in_file.readlines()]
+        return [slang.strip() for slang in in_file]
 
 
 def load_abbr():
@@ -53,7 +53,7 @@ def load_abbr():
 def load_untj():
     """Loads universal interjections as a list."""
     with open(os.path.join(script_dir, "../resources/untj.txt")) as untj_file:
-        return [intj.strip() for intj in untj_file.readlines()]
+        return [intj.strip() for intj in untj_file]
 
 
 def load_spellchecker(lang, edits=1):
