@@ -2,8 +2,7 @@ import csv
 import os
 import sys
 
-from tglstemmer.helpers.affixes import PREFIXES, INFIXES, SUFFIXES
-
+from tglstemmer.helpers.affixes import INFIXES, PREFIXES, SUFFIXES
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 

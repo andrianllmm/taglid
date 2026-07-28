@@ -4,7 +4,15 @@ from taglid import lid
 def test_preprocess():
     test_text = "   lower  UPPER Capital 1 $20 P579.00 don't  paulit-ulit... haha   "
     expected_tokens = [
-        "lower", "UPPER", "Capital", "1", "$20", "P579.00", "don't", "paulit-ulit...", "haha"
+        "lower",
+        "UPPER",
+        "Capital",
+        "1",
+        "$20",
+        "P579.00",
+        "don't",
+        "paulit-ulit...",
+        "haha",
     ]
     assert lid.preprocess(test_text) == expected_tokens
 
@@ -37,8 +45,12 @@ def test_identify_cont():
     assert lid.identify_cont("dunno") == {"eng": 1.5, "tgl": 0}
     assert not lid.identify_cont("idunno")
 
+
 def test_identify_abbr():
-    assert lid.identify_abbr("asap") == {"eng": 2.5, "tgl": 0}  # asap: as soon as possible
+    assert lid.identify_abbr("asap") == {
+        "eng": 2.5,
+        "tgl": 0,
+    }  # asap: as soon as possible
     assert lid.identify_abbr("aka") == {"eng": 2, "tgl": 0}  # aka: also known as
     assert lid.identify_abbr("fr") == {"eng": 1.5, "tgl": 0}  # fr: for real
     assert lid.identify_abbr("id") == {"eng": 1, "tgl": 0}  # id: identification
@@ -68,6 +80,10 @@ def test_identify_root():
 
 
 def test_identify_corrected():
-    assert lid.identify_corrected("mistke") == {"eng": 1, "tgl": 0, "correction": "mistake"}
+    assert lid.identify_corrected("mistke") == {
+        "eng": 1,
+        "tgl": 0,
+        "correction": "mistake",
+    }
     assert lid.identify_corrected("salaa") == {"eng": 0, "tgl": 1, "correction": "sala"}
     assert not lid.identify_corrected("wordnotfound")

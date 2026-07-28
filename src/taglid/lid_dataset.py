@@ -1,14 +1,15 @@
 import argparse
 import os
-import pandas as pd
 import sys
-from typing import Optional
+
+import pandas as pd
 
 from .lid import lang_identify
 
 
 def lang_identify_df(df: pd.DataFrame) -> pd.DataFrame:
-    """Labels each token in each cell in a pandas DataFrame its English and Tagalog value and flag.
+    """Labels each token in each cell in a pandas DataFrame its English and Tagalog
+    value and flag.
 
     Args:
         df (DataFrame): The original DataFrame to be labeled.
@@ -54,11 +55,12 @@ def lang_identify_df(df: pd.DataFrame) -> pd.DataFrame:
 def lang_identify_file(
     in_path: str,
     out_path: str,
-    in_sheet: Optional[str] = None,
-    out_sheet: Optional[str] = None,
-    index: Optional[str] = None,
+    in_sheet: str | None = None,
+    out_sheet: str | None = None,
+    index: str | None = None,
 ) -> bool:
-    """Labels each token in each cell in an Excel file its English and Tagalog value and flag.
+    """Labels each token in each cell in an Excel file its English and Tagalog value
+    and flag.
 
     Args:
         in_path (str): The path to the input Excel file.
@@ -83,7 +85,7 @@ def lang_identify_file(
 
 
 def read_file(
-    filename: str, sheet_name: Optional[str] = None, index: Optional[str] = None
+    filename: str, sheet_name: str | None = None, index: str | None = None
 ) -> pd.DataFrame:
     """Reads an Excel file to a pandas DataFrame."""
     if sheet_name:
@@ -97,9 +99,7 @@ def read_file(
     return df
 
 
-def write_file(
-    df: pd.DataFrame, filename: str, sheet_name: Optional[str] = None
-) -> bool:
+def write_file(df: pd.DataFrame, filename: str, sheet_name: str | None = None) -> bool:
     """Writes a pandas DataFrame to an Excel file."""
     if sheet_name:
         df.to_excel(filename, sheet_name)
@@ -133,7 +133,10 @@ def check_out_file(out_path: str) -> bool:
 
 
 if __name__ == "__main__":
-    description = "Labels each token in each cell in an Excel file its English and Tagalog value and flag."
+    description = (
+        "Labels each token in each cell in an Excel file its English and Tagalog"
+        " value and flag."
+    )
 
     parser = argparse.ArgumentParser(description=description)
 

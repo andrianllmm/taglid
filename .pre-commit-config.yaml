@@ -1,0 +1,18 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.0
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/astral-sh/ty-pre-commit
+    rev: v0.0.64
+    hooks:
+      - id: ty
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.16.5
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]

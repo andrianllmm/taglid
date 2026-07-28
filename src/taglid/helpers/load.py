@@ -4,7 +4,6 @@ import os
 
 from symspellpy import SymSpell
 
-
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -47,13 +46,13 @@ def load_slng(lang):
 
 def load_abbr():
     """Loads English and Tagalog abbreviatons as a dictionary."""
-    with open(os.path.join(script_dir, f"../resources/abbr.json")) as abbr_file:
+    with open(os.path.join(script_dir, "../resources/abbr.json")) as abbr_file:
         return json.load(abbr_file)
 
 
 def load_untj():
     """Loads universal interjections as a list."""
-    with open(os.path.join(script_dir, f"../resources/untj.txt")) as untj_file:
+    with open(os.path.join(script_dir, "../resources/untj.txt")) as untj_file:
         return [intj.strip() for intj in untj_file.readlines()]
 
 

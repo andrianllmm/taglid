@@ -30,8 +30,15 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["twine>=5.1.1"]
-test = ["pytest>=8.3.2", "mypy>=1.11.0"]
+dev = [
+    "commitizen>=4.16.5",
+    "pre-commit>=4.6.1",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.16.0",
+    "twine>=5.1.1",
+    "ty>=0.0.64",
+]
 
 [project.urls]
 homepage = "https://github.com/andrianllmm/taglid"
@@ -42,3 +49,35 @@ package-data = {"taglid" = ["resources/*.txt", "resources/*.json", "resources/fr
 
 [tool.setuptools.dynamic]
 version = {attr = "taglid.__version__"}
+
+[tool.ruff]
+src = ["src"]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/taglid/lid.py" = ["E402"]
+"tests/*" = ["E501"]
+
+[tool.ty.environment]
+python-version = "3.10"
+
+[tool.pytest.ini_options]
+addopts = "--cov=taglid --cov-report=term-missing"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["src/taglid"]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.0.1"
+tag_format = "v$version"
+version_scheme = "semver"
+version_provider = "commitizen"
+version_files = ["src/taglid/__init__.py:__version__"]
+update_changelog_on_bump = true
+major_version_zero = true

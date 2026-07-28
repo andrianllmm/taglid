@@ -1,23 +1,19 @@
 import argparse
 import re
-from tabulate import tabulate
-from typing import Optional
 
+# Import and initialize tokenizers
+from nltk.tokenize import WhitespaceTokenizer, sent_tokenize
+from tabulate import tabulate
 
 # Import helpers
 from .helpers import load
-
-
-# Import and initialize tokenizers
-from nltk.tokenize import sent_tokenize
-from nltk.tokenize import WhitespaceTokenizer
 
 tokenizer = WhitespaceTokenizer()
 
 
 # Import and initialize stemmers/lemmatizers
-from lemminflect import Lemmatizer
 import tglstemmer.stemmer as tgl_stemmer
+from lemminflect import Lemmatizer
 
 eng_lemmatizer = Lemmatizer()
 
@@ -37,7 +33,7 @@ eng_spell = load.load_spellchecker("eng", edits=EDITS)
 tgl_spell = load.load_spellchecker("tgl", edits=EDITS)
 
 
-def lang_identify(text: str, edits: Optional[int] = 1) -> list[dict]:
+def lang_identify(text: str, edits: int | None = 1) -> list[dict]:
     """Labels each token in a text its English and Tagalog values and flag.
 
     Args:
@@ -56,11 +52,13 @@ def lang_identify(text: str, edits: Optional[int] = 1) -> list[dict]:
                 - 'ABBR': Abbreviation of initialism and acronyms (e.g. LOL).
                 - 'CONT': Contraction of multiple words (e.g. ya'll).
                 - 'DICT': Word found in dictionary.
-                - 'SLNG': Word not found in the dictionary but is found in a list of slang words.
+                - 'SLNG': Word not found in the dictionary but is found in a list of
+                  slang words.
                 - 'ROOT': Word not found in the dictionary but its root word is.
                 - 'INTW': Intraword or word that mixes English and Tagalog.
                 - 'NA': Unidentified.
-            - 'correction' (str, optional): The corrected spelling of the original word, if applicable.
+            - 'correction' (str, optional): The corrected spelling of the original
+              word, if applicable.
     """
     tokens = preprocess(text)
 
@@ -135,7 +133,8 @@ def simplify(labeled_text: list[dict]) -> list[tuple]:
         labeled_text (list[dict]): The labeled text returned by `lang_identify`.
 
     Returns:
-        list[tuple]: A list of tuples, where each tuple contains the word and its corresponding language. Values can be:
+        list[tuple]: A list of tuples, where each tuple contains the word and its
+            corresponding language. Values can be:
             - 'na': Unidentified.
             - 'eng': Mostly English.
             - 'tgl': Mostly Tagalog.
@@ -180,14 +179,15 @@ def preprocess(text: str) -> list[str]:
     return preprocessed_tokens
 
 
-def identify_num(token: str) -> Optional[dict]:
+def identify_num(token: str) -> dict | None:
     """Identifies if a word contains a numeral.
 
     Args:
         token (str): The word to be identified.
 
     Returns:
-        dict, optional: A dictionary containing English and Tagalog values of zero, if identified, None otherwise.
+        dict, optional: A dictionary containing English and Tagalog values of zero,
+            if identified, None otherwise.
     """
     if match := re.match(r"(\$|Php)(.+)", token):
         token = match.group(2)
@@ -199,40 +199,43 @@ def identify_num(token: str) -> Optional[dict]:
         return None
 
 
-def identify_ne(token: str) -> Optional[dict]:
+def identify_ne(token: str) -> dict | None:
     """Identifies if a word is a universal named entity.
 
     Args:
         token (str): The word to be identified.
 
     Returns:
-        dict, optional: A dictionary containing English and Tagalog values of zero, if identified, None otherwise.
+        dict, optional: A dictionary containing English and Tagalog values of zero,
+            if identified, None otherwise.
     """
     return {"eng": 0, "tgl": 0} if token[0].isupper() else None
 
 
-def identify_untj(token: str) -> Optional[dict]:
+def identify_untj(token: str) -> dict | None:
     """Identifies if a word is a universal interjection.
 
     Args:
         token (str): The word to be identified.
 
     Returns:
-        dict, optional: A dictionary containing English and Tagalog values of zero, if identified, None otherwise.
+        dict, optional: A dictionary containing English and Tagalog values of zero,
+            if identified, None otherwise.
     """
     token = token.lower()
 
     return {"eng": 0, "tgl": 0} if token in UNTJ else None
 
 
-def identify_freq(token: str) -> Optional[dict]:
+def identify_freq(token: str) -> dict | None:
     """Identifies the language of a word based on word frequencies.
 
     Args:
         token (str): The word to be identified.
 
     Returns:
-        dict, optional: A dictionary containing the English and Tagalog values, if identified, None otherwise.
+        dict, optional: A dictionary containing the English and Tagalog values, if
+            identified, None otherwise.
     """
     token = token.lower()
 
@@ -251,14 +254,16 @@ def identify_freq(token: str) -> Optional[dict]:
     return None
 
 
-def identify_dict(token: str) -> Optional[dict]:
-    """Identifies the language of a word based on dictionary presence and word frequencies.
+def identify_dict(token: str) -> dict | None:
+    """Identifies the language of a word based on dictionary presence and word
+    frequencies.
 
     Args:
         token (str): The word to be identified.
 
     Returns:
-        dict, optional: A dictionary containing the English and Tagalog values, if identified, None otherwise.
+        dict, optional: A dictionary containing the English and Tagalog values, if
+            identified, None otherwise.
     """
     token = token.lower()
 
@@ -281,14 +286,15 @@ def identify_dict(token: str) -> Optional[dict]:
     return None
 
 
-def identify_cont(token: str) -> Optional[dict]:
+def identify_cont(token: str) -> dict | None:
     """Identifies the language of a word based on common contraction characteristics.
 
     Args:
         token (str): The word to be identified.
 
     Returns:
-        dict, optional: A dictionary containing the English and Tagalog values, if identified, None otherwise.
+        dict, optional: A dictionary containing the English and Tagalog values, if
+            identified, None otherwise.
     """
     token = token.lower()
 
@@ -314,14 +320,15 @@ def identify_cont(token: str) -> Optional[dict]:
     return None
 
 
-def identify_abbr(token: str) -> Optional[dict]:
+def identify_abbr(token: str) -> dict | None:
     """Identifies the language of an abbreviation (initialism/acronym).
 
     Args:
         token (str): The word to be identified.
 
     Returns:
-        dict, optional: A dictionary containing the English and Tagalog values, if identified, None otherwise.
+        dict, optional: A dictionary containing the English and Tagalog values, if
+            identified, None otherwise.
     """
     token = token.lower()
 
@@ -349,14 +356,15 @@ def identify_abbr(token: str) -> Optional[dict]:
     return None
 
 
-def identify_slng(token: str) -> Optional[dict]:
+def identify_slng(token: str) -> dict | None:
     """Identifies the language of a slang.
 
     Args:
         token (str): The word to be identified.
 
     Returns:
-        dict, optional: A dictionary containing the English and Tagalog values, if identified, None otherwise.
+        dict, optional: A dictionary containing the English and Tagalog values, if
+            identified, None otherwise.
     """
     token = token.lower()
 
@@ -374,14 +382,15 @@ def identify_slng(token: str) -> Optional[dict]:
     return None
 
 
-def identify_root(token: str) -> Optional[dict]:
+def identify_root(token: str) -> dict | None:
     """Identifies the language of a word after attempting lemmatization or stemming.
 
     Args:
         token (str): The word to be identified.
 
     Returns:
-        dict, optional: A dictionary containing the English and Tagalog values, if identified, None otherwise.
+        dict, optional: A dictionary containing the English and Tagalog values, if
+            identified, None otherwise.
     """
     token = token.lower()
 
@@ -420,7 +429,7 @@ def identify_root(token: str) -> Optional[dict]:
     return None
 
 
-def identify_corrected(token: str, edits: Optional[int] = 1) -> Optional[dict]:
+def identify_corrected(token: str, edits: int | None = 1) -> dict | None:
     """Identifies the language of a word after attempting spelling correction.
 
     Args:
@@ -428,7 +437,8 @@ def identify_corrected(token: str, edits: Optional[int] = 1) -> Optional[dict]:
         edits (int, optional): The edit distance of the spell checker. Defaults to 1.
 
     Returns:
-        dict, optional: A dictionary containing the English and Tagalog values and the corrected word, if identified, None otherwise.
+        dict, optional: A dictionary containing the English and Tagalog values and
+            the corrected word, if identified, None otherwise.
     """
     token = token.lower()
 
@@ -474,7 +484,10 @@ def identify_corrected(token: str, edits: Optional[int] = 1) -> Optional[dict]:
 
 
 if __name__ == "__main__":
-    description = "Labels each token in a text its language or English and Tagalog values and flag."
+    description = (
+        "Labels each token in a text its language or English and Tagalog values and"
+        " flag."
+    )
 
     parser = argparse.ArgumentParser(description=description)
 
