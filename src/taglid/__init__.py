@@ -6,6 +6,6 @@ __version__ = "0.0.1"
 import nltk
 
 try:
-    nltk.data.find('tokenizers/punkt.zip')
+    nltk.data.find("tokenizers/punkt.zip")
 except LookupError:
     nltk.download("punkt_tab")

@@ -100,7 +100,7 @@ original column, and token index.
 import pandas as pd
 from taglid.lid_dataset import lang_identify_df
 
-data = [['hello po', 'ano?'], ['mag-aask lang po', 'what?']]
+data = [["hello po", "ano?"], ["mag-aask lang po", "what?"]]
 
 df = pd.DataFrame(data)
 
