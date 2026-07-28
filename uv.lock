@@ -1671,7 +1671,7 @@ requires-dist = [
     { name = "pandas", specifier = ">=2.2.2" },
     { name = "symspellpy", specifier = ">=6.7.7" },
     { name = "tabulate", specifier = ">=0.9.0" },
-    { name = "tglstemmer", git = "https://github.com/andrianllmm/tagalog-stemmer.git?rev=main" },
+    { name = "tglstemmer", specifier = ">=0.1.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -1697,11 +1697,15 @@ wheels = [
 
 [[package]]
 name = "tglstemmer"
-version = "0.0.1"
-source = { git = "https://github.com/andrianllmm/tagalog-stemmer.git?rev=main#5c6849237e20dda83a46b16e6a96e95b7c9ec475" }
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "nltk" },
     { name = "tabulate" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/72/fd/ce5969797a6ebe02e07b4d97d16bc9865ce9f45b76b1a2d299c1a8a27c79/tglstemmer-0.1.0.tar.gz", hash = "sha256:fa89f621563ddb09f09eee1a86868cbb050290d7e5cf8e41d94f7717f203620f", size = 137164, upload-time = "2026-07-28T17:00:34.678Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/19/41/dd2667d48c1d3fb77f0ae9d0e7040d23c493d0ac338ea03a525325602141/tglstemmer-0.1.0-py3-none-any.whl", hash = "sha256:cb800381fcf69a27d24d2ffef614f1234aad474f5718d8431aa108766caa02ad", size = 135317, upload-time = "2026-07-28T17:00:33.622Z" },
 ]
 
 [[package]]
