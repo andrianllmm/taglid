@@ -177,8 +177,8 @@ This project uses [uv](https://docs.astral.sh/uv/) for dependency management.
 Clone the repo and sync dependencies (including dev and test groups):
 
 ```sh
-git clone https://github.com/andrianllmm/tagLID.git
-cd tagLID
+git clone https://github.com/andrianllmm/taglid.git
+cd taglid
 uv sync --all-groups
 ```
 
