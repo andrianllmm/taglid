@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "taglid"
-dynamic = ["version"]
+version = "0.1.0"
 description = "A Word level Language Identification (LID) tool for Tagalog-English (Taglish) text."
 readme = "README.md"
-license = {file = "LICENSE.txt"}
+license = {file = "LICENSE"}
 authors = [
   {name = "Andrian Lloyd Maagma", email = "maagmaandrian@gmail.com"}
 ]
@@ -19,6 +19,7 @@ classifiers = [
   "Operating System :: OS Independent",
 ]
 requires-python = ">=3.10"
+
 dependencies = [
   "lemminflect>=0.2.3",
   "nltk>=3.8.1",
@@ -32,6 +33,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "commitizen>=4.16.5",
+    "git-cliff>=2.13.1",
     "pre-commit>=4.6.1",
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
@@ -47,37 +49,8 @@ issues = "https://github.com/andrianllmm/taglid/issues"
 [tool.setuptools]
 package-data = {"taglid" = ["resources/*.txt", "resources/*.json", "resources/freqlist/*.csv", "resources/slang/*.txt"]}
 
-[tool.setuptools.dynamic]
-version = {attr = "taglid.__version__"}
-
-[tool.ruff]
-src = ["src"]
-line-length = 88
-target-version = "py310"
-
-[tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B"]
-
-[tool.ruff.lint.per-file-ignores]
-"src/taglid/lid.py" = ["E402"]
-"tests/*" = ["E501"]
-
-[tool.ty.environment]
-python-version = "3.10"
-
-[tool.pytest.ini_options]
-addopts = "--cov=taglid --cov-report=term-missing"
-testpaths = ["tests"]
-
-[tool.coverage.run]
-source = ["src/taglid"]
-
-[tool.commitizen]
-name = "cz_conventional_commits"
-version = "0.0.1"
-tag_format = "v$version"
-version_scheme = "semver"
-version_provider = "commitizen"
-version_files = ["src/taglid/__init__.py:__version__"]
-update_changelog_on_bump = true
-major_version_zero = true
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
