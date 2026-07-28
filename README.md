@@ -2,20 +2,25 @@
 
 # TagLID
 
-**A word-level Language Identification (LID) tool for Tagalog-English (Taglish)
-text**
+**A word-level Language Identification (LID) tool for Tagalog-English (Taglish) text**
+
+[![PyPI version](https://img.shields.io/pypi/v/taglid.svg?style=flat)](https://pypi.org/project/taglid/)
+[![Downloads](https://pepy.tech/badge/taglid)](https://pepy.tech/project/taglid)
+[![License](https://img.shields.io/github/license/andrianllmm/taglid?style=flat)](https://github.com/andrianllmm/taglid/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/andrianllmm/taglid?style=flat)](https://github.com/andrianllmm/taglid/stargazers)
+[![CI](https://github.com/andrianllmm/taglid/actions/workflows/ci.yml/badge.svg)](https://github.com/andrianllmm/taglid/actions/workflows/ci.yml)
 
 </div>
 
 ## About
 
-TagLID is a library that labels each word in a Taglish (Tagalog-English mix)
-text by language. It gives either a simple tag (`tgl` or `eng`) or detailed
-frequency info with flags indicating how the word was identified. It is a
-rule-based and opinionated system that mostly uses dictionary lookups. It also
-handles cases like skipping numbers, names, and interjections, and includes
-logic for dealing with slang, abbreviations, contractions, stemming or
-lemmatizing inflected words, intrawords, and correcting misspellings.
+TagLID labels each word in a Taglish (Tagalog-English mix) text by language. It
+gives either a simple tag (`tgl` or `eng`) or detailed frequency info with
+flags indicating how the word was identified. It is a rule-based, opinionated
+system that relies mostly on dictionary lookups, with additional logic for
+skipping numbers, names, and interjections, and for handling slang,
+abbreviations, contractions, stemming and lemmatizing inflected words,
+intrawords, and misspelling correction.
 
 ## Installation
 
@@ -25,17 +30,17 @@ pip install taglid
 
 ## Usage
 
-TagLID can act as a standalone library that can be imported via `import taglid`
-or as a CLI application via `python -m taglid`.
+TagLID can be used as a library via `import taglid`, or as a CLI application
+via `python -m taglid`.
 
-### Library Mode
+### Library
 
 #### Textual data
 
 Use the `lid` module for textual data.
 
-Use `lang_identify` to identify each word in a text. This takes any string and
-returns a list of words and their corresponding English and Tagalog values,
+Use `lang_identify` to identify each word in a text. It takes any string and
+returns a list of words with their corresponding English and Tagalog scores,
 flag, and correction.
 
 ```python
@@ -51,8 +56,8 @@ Output:
 [{'Word': 'hello', 'eng': 1.0, 'tgl': 0.0, 'Flag': 'DICT', 'Correction': None}, {'Word': 'mundo', 'eng': 0.0, 'tgl': 1.0, 'Flag': 'DICT', 'Correction': None}]
 ```
 
-Use [`tabulate`](https://pypi.org/project/tabulate/) to view output in tabular
-format.
+Use [`tabulate`](https://pypi.org/project/tabulate/) to view the output in
+tabular format.
 
 ```python
 from tabulate import tabulate
@@ -69,9 +74,9 @@ hello       1      0  DICT
 mundo       0      1  DICT
 ```
 
-Use `simplify` to only show the words and their language. This takes the return
-value of `lang_identify` and returns a list of tuples containing the word and
-its language.
+Use `simplify` to reduce the output to only the words and their language. It
+takes the return value of `lang_identify` and returns a list of tuples
+containing the word and its language.
 
 ```python
 from taglid.lid import simplify
@@ -90,11 +95,11 @@ Output:
 
 Use the `lid_dataset` module for datasets.
 
-Use `lang_identify_df` to label each word in each cell in a
-[`pandas`](https://pypi.org/project/pandas/) DataFrame. This takes a DataFrame
-of multiple rows and columns with each cell containing textual data and returns
-a labeled DataFrame where each token is a row labeled by its original row,
-original column, and token index.
+Use `lang_identify_df` to label each word in each cell of a
+[`pandas`](https://pypi.org/project/pandas/) DataFrame. It takes a DataFrame
+of multiple rows and columns, where each cell contains textual data, and
+returns a labeled DataFrame where each token is a row labeled by its original
+row, original column, and token index.
 
 ```python
 import pandas as pd
@@ -122,7 +127,7 @@ row
 1      1            1      what  1.0  0.0  DICT       None
 ```
 
-### CLI Mode
+### CLI
 
 Run TagLID from the terminal.
 
@@ -187,3 +192,12 @@ Run the tests:
 ```sh
 uv run pytest
 ```
+
+## Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+## License
+
+Distributed under the [MIT License](LICENSE).
+</content>
