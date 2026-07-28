@@ -57,7 +57,7 @@ def load_included(lang):
     for filename in os.listdir(f"{script_dir}/included"):
         if filename.endswith(".txt") and filename.startswith(lang):
             with open(os.path.join(script_dir, f"included/{filename}")) as in_file:
-                included.extend([word.strip().lower() for word in in_file.readlines()])
+                included.extend([word.strip().lower() for word in in_file])
 
     included.extend(PREFIXES + INFIXES + SUFFIXES)
 
@@ -70,7 +70,7 @@ def load_excluded():
     for filename in os.listdir(f"{script_dir}/excluded"):
         if filename.endswith(".txt"):
             with open(os.path.join(script_dir, f"excluded/{filename}")) as in_file:
-                excluded.extend([word.strip().lower() for word in in_file.readlines()])
+                excluded.extend([word.strip().lower() for word in in_file])
 
     return excluded
 

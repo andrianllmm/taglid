@@ -1,5 +1,4 @@
-__version__ = "0.0.1"
-
+"""A Word level Language Identification (LID) tool for Tagalog-English (Taglish) text."""
 
 # Install nltk data
 

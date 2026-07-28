@@ -20,7 +20,7 @@ lemmatizing inflected words, intrawords, and correcting misspellings.
 ## Installation
 
 ```sh
-pip install git+https://github.com/andrianllmm/taglid.git@main
+pip install taglid
 ```
 
 ## Usage
