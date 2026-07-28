@@ -29,11 +29,8 @@ dependencies = [
   "tglstemmer @ git+https://github.com/andrianllmm/tagalog-stemmer.git@main",
 ]
 
-[project.optional-dependencies]
-dev = [
-  "twine>=5.1.1",
-  "pip-tools>=7.4.1"
-]
+[dependency-groups]
+dev = ["twine>=5.1.1"]
 test = ["pytest>=8.3.2", "mypy>=1.11.0"]
 
 [project.urls]
