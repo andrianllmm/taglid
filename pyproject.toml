@@ -5,17 +5,22 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "taglid"
 version = "0.1.0"
-description = "A Word level Language Identification (LID) tool for Tagalog-English (Taglish) text."
+description = "A word-level Language Identification (LID) tool for Tagalog-English (Taglish) text."
 readme = "README.md"
-license = {file = "LICENSE"}
+license = "MIT"
 authors = [
   {name = "Andrian Lloyd Maagma", email = "maagmaandrian@gmail.com"}
 ]
 keywords = ["Language Identification", "LID", "Taglish", "Code-switching", "Code-mixed", "Tagalog", "English"]
 classifiers = [
   "Development Status :: 3 - Alpha",
-  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Developers",
+  "Topic :: Text Processing :: Linguistic",
+  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Operating System :: OS Independent",
 ]
 requires-python = ">=3.10"
@@ -44,6 +49,7 @@ dev = [
 
 [project.urls]
 homepage = "https://github.com/andrianllmm/taglid"
+repository = "https://github.com/andrianllmm/taglid"
 issues = "https://github.com/andrianllmm/taglid/issues"
 
 [tool.setuptools]
